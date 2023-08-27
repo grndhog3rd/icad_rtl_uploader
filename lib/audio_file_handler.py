@@ -5,9 +5,8 @@ import re
 import shutil
 import subprocess
 import traceback
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
-import pytz
 import time
 from mutagen.mp3 import MP3
 
@@ -65,21 +64,15 @@ def create_json(mp3_filename, mp3_directory, json_path, channel_data):
     timestamp_part = parts[1] + '_' + parts[2]
     frequency_part = int(parts[3].replace(".mp3", ""))
 
-    # Get system timezone
-    link_path = os.readlink('/etc/localtime')
-    system_timezone = re.search('usr/share/zoneinfo/(.*)', link_path).group(1)
+    # Extracting date and time from the filename and converting to datetime object
+    datetime_str = date_str + " " + time_str
+    datetime_obj = datetime.strptime(datetime_str, '%Y%m%d %H%M%S')
 
-    module_logger.debug(system_timezone)
+    # Making the datetime object timezone-aware and set to UTC
+    datetime_obj_utc = datetime_obj.replace(tzinfo=timezone.utc)
 
-    # Convert the file name to a naive datetime object using the specified format
-    naive_dt_object = datetime.strptime(timestamp_part, "%Y%m%d_%H%M%S")
-
-    # Make the datetime object aware that it is in the system's local timezone
-    local_tz = pytz.timezone(system_timezone)
-    aware_dt_object = local_tz.localize(naive_dt_object)
-
-    # Convert the timezone-aware datetime object to an epoch timestamp (seconds since 1970-01-01 00:00:00 UTC)
-    epoch_timestamp = int(aware_dt_object.timestamp())
+    # Converting the timezone-aware datetime object to a UTC timestamp
+    epoch_timestamp = datetime_obj_utc.timestamp()
 
     # Load the MP3 file
     audio = MP3(os.path.join(mp3_directory, mp3_filename))
