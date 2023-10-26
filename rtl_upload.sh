@@ -1,7 +1,9 @@
 #! /bin/bash
 
-cd /home/example/icad_rtl_uploader
-python3 airband_uploader.py ${1} ${2}
+realpath "$0"
+echo $base_dir
+#cd /home/example/icad_rtl_uploader
+python3 ${1}rtl_uploader.py ${1} ${2} ${3}
 status=$?
 
 # Exit with 0 status, even if there is an error.

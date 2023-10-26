@@ -12,6 +12,8 @@ from lib.rdio_handler import upload_to_rdio
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Process Arguments.')
+    parser.add_argument("call_path", help="Path to install dir.")
+    parser.add_argument("app_config_path", help="Application config.json with path.")
     parser.add_argument("sys_name", help="System Name.")
     parser.add_argument("audio_mp3", help="Path to MP3.")
     args = parser.parse_args()
@@ -22,7 +24,7 @@ def parse_arguments():
 def get_paths(args):
     root_path = os.getcwd()
     config_file = 'config.json'
-    config_path = os.path.join(f'{root_path}/etc', config_file)
+    config_path = args.app_config_path
     mp3_path = args.audio_mp3
     m4a_path = mp3_path.replace(".mp3", ".m4a")
     log_path = mp3_path.replace(".mp3", ".log")
