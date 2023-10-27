@@ -61,18 +61,16 @@ def create_json(mp3_filename, mp3_directory, json_path, channel_data):
 
     # Extract the first, second, and third parts
     short_name = parts[0]
-    timestamp_part = parts[1] + '_' + parts[2]
-    frequency_part = int(parts[3].replace(".mp3", ""))
+    timestamp_part = parts[1]
+    frequency_part = int(parts[2].replace(".mp3", ""))
 
     # Extracting date and time from the filename and converting to datetime object
-    datetime_str = date_str + " " + time_str
-    datetime_obj = datetime.strptime(datetime_str, '%Y%m%d %H%M%S')
 
     # Making the datetime object timezone-aware and set to UTC
-    datetime_obj_utc = datetime_obj.replace(tzinfo=timezone.utc)
+
 
     # Converting the timezone-aware datetime object to a UTC timestamp
-    epoch_timestamp = datetime_obj_utc.timestamp()
+    epoch_timestamp = timestamp_part
 
     # Load the MP3 file
     audio = MP3(os.path.join(mp3_directory, mp3_filename))
