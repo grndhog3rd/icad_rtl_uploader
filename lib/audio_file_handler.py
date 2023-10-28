@@ -89,7 +89,6 @@ def create_json(mp3_filename, mp3_directory, json_path, channel_data):
         return False
 
     call_split = "."
-    result = my_str.split(separator, 1)[0]
     call_time = epoch_timestamp.split(call_split, 1)[0]
     module_logger.debug(f"Timestamp split {call_time} of parts.")
     call_data["talkgroup"] = int(talkgroup_data["talkgroup_decimal"])
