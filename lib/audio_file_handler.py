@@ -5,7 +5,6 @@ import re
 import shutil
 import subprocess
 import traceback
-import math
 from datetime import datetime, timezone
 from pathlib import Path
 import time
@@ -65,7 +64,6 @@ def create_json(mp3_filename, mp3_directory, json_path, channel_data):
     timestamp_part = parts[1]
     frequency_part = int(parts[2].replace(".mp3", ""))
     module_logger.debug(f"Timestamp {timestamp_part} of parts.")
-    module_logger.debug(f"Timestamp trunc {math.trunc(timestamp_part)} of parts.")
     # Extracting date and time from the filename and converting to datetime object
 
     # Making the datetime object timezone-aware and set to UTC
@@ -90,7 +88,10 @@ def create_json(mp3_filename, mp3_directory, json_path, channel_data):
     if not talkgroup_data:
         return False
 
-    call_time = math.trunc(epoch_timestamp)
+    call_split = "."
+    result = my_str.split(separator, 1)[0]
+    call_time = epoch_timestamp.split(call_split, 1)[0]
+    module_logger.debug(f"Timestamp split {call_time} of parts.")
     call_data["talkgroup"] = int(talkgroup_data["talkgroup_decimal"])
     call_data["start_time"] = call_time
     call_data["call_length"] = duration_sec
