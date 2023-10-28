@@ -63,7 +63,7 @@ def create_json(mp3_filename, mp3_directory, json_path, channel_data):
     short_name = parts[0]
     timestamp_part = parts[1]
     frequency_part = int(parts[2].replace(".mp3", ""))
-
+    module_logger.debug(f"Timestamp {timestamp_part} of parts.")
     # Extracting date and time from the filename and converting to datetime object
 
     # Making the datetime object timezone-aware and set to UTC
