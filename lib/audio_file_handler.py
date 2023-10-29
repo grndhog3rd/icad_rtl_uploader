@@ -93,7 +93,7 @@ def create_json(mp3_filename, mp3_directory, json_path, channel_data):
     call_time2 = epoch_timestamp.split(call_split, 1)[0]
     call_time3 = int(call_time2)
     call_time4 = datetime.fromtimestamp(call_time3)
-    call_time = call_time4.isoformat()
+    call_time = call_time4.isoformat() + 'Z'
     module_logger.debug(f"Timestamp split {call_time} of parts.")
     call_data["talkgroup"] = int(talkgroup_data["talkgroup_decimal"])
     call_data["start_time"] = call_time
