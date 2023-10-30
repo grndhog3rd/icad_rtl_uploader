@@ -97,7 +97,7 @@ def create_json(mp3_filename, mp3_directory, json_path, channel_data):
     call_time = call_time2
     module_logger.debug(f"Timestamp split {call_time} of parts.")
     call_data["talkgroup"] = int(talkgroup_data["talkgroup_decimal"])
-    call_data["start_time"] = call_time
+    call_data["start_time"] = int(call_time)
     call_data["call_length"] = duration_sec
     call_data["talkgroup_tag"] = talkgroup_data["talkgroup_alpha_tag"]
     call_data["talkgroup_description"] = talkgroup_data["talkgroup_name"]
@@ -105,10 +105,10 @@ def create_json(mp3_filename, mp3_directory, json_path, channel_data):
     call_data["talkgroup_group_tag"] = talkgroup_data["talkgroup_service_type"]
     call_data["short_name"] = short_name
     call_data["freqList"].append(
-        {"freq": int(frequency_part), "time": call_time, "pos": 0.00, "len": duration_sec, "error_count": "0",
+        {"freq": int(frequency_part), "time": int(call_time), "pos": 0.00, "len": duration_sec, "error_count": "0",
          "spike_count": "0"}),
     call_data["srcList"].append(
-        {"src": -1, "time": call_time, "pos": 0.00, "emergency": 0, "signal_system": "", "tag": ""})
+        {"src": -1, "time": int(call_time), "pos": 0.00, "emergency": 0, "signal_system": "", "tag": ""})
 
     with open(json_path, "w+") as f:
         json.dump(call_data, f, indent=4)
