@@ -96,6 +96,7 @@ def create_json(mp3_filename, mp3_directory, json_path, channel_data):
     #call_time = call_time4.isoformat() + 'Z'
     call_time = call_time2
     module_logger.debug(f"Timestamp split {call_time} of parts.")
+    call_date["freq"] = int(frequency_part)
     call_data["talkgroup"] = int(talkgroup_data["talkgroup_decimal"])
     call_data["start_time"] = int(call_time)
     call_data["call_length"] = duration_sec
